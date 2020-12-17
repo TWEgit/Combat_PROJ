@@ -13,6 +13,10 @@ Criação de uma adaptação do jogo Combat (Atari VCS) para o PyGame.
 - Existem um total de três tipos de veículos disponíveis que se controlam de forma diferente (tanques, avionetas e jatos), com opções extra de customizar o jogo.
 - Por exemplo, existem modos em que tiros podem ser controlados remotamente ou que fazem ricochete nas paredes da arena.
 
+### UI
+
+![UI](ui.png)
+
 ### Pacotes
 
 - Pygame
