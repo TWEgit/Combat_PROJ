@@ -1,4 +1,4 @@
-# Combat_PROJ
+# Projeto Atari Combat
 ## FPRO/MIEIC, 2020/21
 ## Tomás Pacheco Pires (up202008319)
 ## 1MIEIC07
