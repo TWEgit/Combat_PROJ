@@ -41,7 +41,7 @@ def print_score(screen, num, sc2):
     sc_render.blit(n1,(sc_render.get_width()//2, 0))
     if num//10:
         n2 = sc_nums[(num//10)%10]
-        n2 = pygame.transform.scale(n1, (n2.get_width()*8*SCALE, n2.get_height()*2*SCALE))
+        n2 = pygame.transform.scale(n2, (n2.get_width()*8*SCALE, n2.get_height()*2*SCALE))
         n2.blit(pal, (0,0), special_flags=pygame.BLEND_RGBA_MULT)
         sc_render.blit(n2,(0,0))
     pos = ((8*4+8*20)*SCALE, 2*SCALE) if sc2 else ((8*4)*SCALE, 2*SCALE)
