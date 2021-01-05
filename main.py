@@ -1,4 +1,5 @@
 import pygame
+import combat
 import vcs
 
 SCREEN_WIDTH = 640
@@ -10,10 +11,9 @@ pygame.init()
 window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Combat")
 
-while(active):
 
-    for e in pygame.event.get():
-        if e.type == pygame.QUIT:
-            active = False
-    vcs.update(window)
+
+while(active):
+    active = combat.update(window)
+    
 pygame.quit()
