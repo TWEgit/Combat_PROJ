@@ -4,13 +4,13 @@ import pygame
 # Contains the scale of the window.
 SCALE = 2
 
-# Real color palette.
+# Real color palette (P1, P2, PF, BK).
 colump = [pygame.Color(176, 60, 60), pygame.Color(28, 32, 156), pygame.Color(236, 168, 128), pygame.Color(180, 192, 120)]
 
 # Loads graphics at boot-up (borrowed from Pygame's tutorials)
 def load_image(name):
     pathname = os.path.join("res", "gfx", name)
-    print(pathname)
+    print("Loaded " + pathname)
     try:
         image = pygame.image.load(pathname)
     except pygame.error as message:
@@ -20,15 +20,23 @@ def load_image(name):
 
 
 # Playfield graphics modes.
-pf_modes = [load_image(name) for name in ("pf_none.png", "sc_0.png")]
+pf_modes = [load_image(name) for name in ("pf_none.png", "pf_comp.png")]
 # Score numbers.
 sc_nums = [load_image("sc_"+str(name)+".png") for name in range(10)]
+# Tank graphics.
+tank_gp = [load_image("tank_"+str(name)+".png") for name in range(1,5)]
 
 
 def set_palette(pal):
     for i,c in enumerate(pal):
         if type(c) == type(pygame.Color()):
             colump[i] = c
+
+def set_graphic(img, clr):
+    pal = pygame.Surface(img.get_size())
+    pal.fill(colump[clr])
+    img.blit(pal, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
+    return img
 
 def print_score(screen, num, sc2):
     n1 = sc_nums[num%10]
