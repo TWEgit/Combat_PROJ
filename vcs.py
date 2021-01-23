@@ -25,6 +25,8 @@ pf_modes = [load_image(name) for name in ("pf_none.png", "pf_comp.png")]
 sc_nums = [load_image("sc_"+str(name)+".png") for name in range(10)]
 # Tank graphics.
 tank_gp = [load_image("tank_"+str(name)+".png") for name in range(1,5)]
+# The missile pixel.
+m_pixel = load_image("a_single_pixel.png")
 
 
 def set_palette(pal):
