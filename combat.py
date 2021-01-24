@@ -53,6 +53,11 @@ class Player(pygame.sprite.Sprite):
         self.win = False
         self.win_move = False
 
+        self.snd_idle = vcs.load_sound("idle.wav")
+        self.snd_fwd = vcs.load_sound("fwd.wav")
+        self.snd_shoot = vcs.load_sound("shoot_2.wav" if self.p2 else "shoot_1.wav")
+        self.snd_boom = vcs.load_sound("boom_2.wav" if self.p2 else "boom_1.wav")
+
         self.rotation = rot
         self.rot_counter = 15
         self.rot_right = False
@@ -93,6 +98,8 @@ class Player(pygame.sprite.Sprite):
                         self._shoot()
                 if self.is_mov:
                     self._move()
+                if not self.missl.alive():
+                    self._update_sound()
 
     def _in_bounds(self):
         coord = self.rect.topleft
@@ -165,6 +172,8 @@ class Player(pygame.sprite.Sprite):
         self.lose = True
         self.rush_dir = self.rotation
         self.score_timer = 127
+        pygame.mixer.stop()
+        self.snd_boom.play()
     
     def _lose(self):
         self.rotation = (self.rotation+2)%16
@@ -185,6 +194,15 @@ class Player(pygame.sprite.Sprite):
         elif self.score_timer >= 124: 
             npos = self.rect.move([-x*4*SCALE for x in dir_table[self.rush_dir]])
             self.rect = npos
+    
+    def _update_sound(self):
+        if self.is_mov and self.snd_fwd.get_num_channels() == 0:
+            self.snd_idle.stop()
+            self.snd_fwd.play(-1)
+        elif self.snd_idle.get_num_channels() == 0:
+            self.snd_fwd.stop()
+            self.snd_idle.play(-1)
+        
 
 
 class Missile(pygame.sprite.Sprite):
@@ -200,11 +218,13 @@ class Missile(pygame.sprite.Sprite):
         self.rotation = rot
         self.rect.topleft = pos
         self.timer = 63
+
+        self.player.snd_shoot.play()
     
     def update(self, inpt):
         self.timer -= 1
         if not self.timer:
-            self.kill()
+            self._kill()
         self._check_collision()
         self.rotation = self.player.rotation
         self._move()
@@ -215,16 +235,21 @@ class Missile(pygame.sprite.Sprite):
     
     def _check_collision(self):
         if pygame.sprite.collide_mask(self, playfield):
-            self.kill()
+            self._kill()
         if pygame.sprite.collide_mask(self, player_1) and self.player == player_2:
             player_1._get_shot()
-            player_1.missl.kill()
-            self.kill()
+            player_1.missl._kill()
+            self._kill()
         elif pygame.sprite.collide_mask(self, player_2) and self.player == player_1:
             player_2._get_shot()
             player_2.missl.kill()
-            self.kill()
+            self._kill()
+    
+    def _kill(self):
+        self.player.snd_shoot.stop()
+        self.kill()
 
+pygame.mixer.init()
 playfield = Playfield()
 player_1 = Player(8, 102, 0, 0, False)
 player_2 = Player(142, 102, 1, 8, True)

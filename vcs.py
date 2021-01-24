@@ -10,7 +10,6 @@ colump = [pygame.Color(176, 60, 60), pygame.Color(28, 32, 156), pygame.Color(236
 # Loads graphics at boot-up (borrowed from Pygame's tutorials)
 def load_image(name):
     pathname = os.path.join("res", "gfx", name)
-    print("Loaded " + pathname)
     try:
         image = pygame.image.load(pathname)
     except pygame.error as message:
@@ -18,6 +17,14 @@ def load_image(name):
         raise SystemExit(message)
     return image
 
+def load_sound(name):
+    pathname = os.path.join("res", "snd", name)
+    try:
+        sound = pygame.mixer.Sound(pathname)
+    except pygame.error as message:
+        print("Cannot load sound:", name)
+        raise SystemExit(message)
+    return sound
 
 # Playfield graphics modes.
 pf_modes = [load_image(name) for name in ("pf_none.png", "pf_comp.png")]

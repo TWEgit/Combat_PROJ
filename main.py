@@ -7,6 +7,7 @@ SCREEN_HEIGHT = 444
 
 def main():
     pygame.init()
+    pygame.mixer.init()
     window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Combat")
 
