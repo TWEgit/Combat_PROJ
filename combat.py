@@ -156,7 +156,7 @@ class Player(pygame.sprite.Sprite):
     
     def _shoot(self):
         if not self.missl.alive():
-            self.missl = Missile(self.p2, self.rotation, (self.rect.topleft[0], self.rect.topleft[1]), self)
+            self.missl = Missile(self.p2, self.rotation, (self.rect.topleft[0]+8*SCALE, self.rect.topleft[1]+8*SCALE), self)
             objects.add(self.missl)
     
     def _get_shot(self):
